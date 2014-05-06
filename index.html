@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Transistor calculator</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="container" style="width: 500px" ng-controller="TransistorCalculatorCtrl">
+
+  <form name="calc">
+    <select ng-model="transistor" ng-options="t.name for t in transistors">
+      <option value="">-- choose --</option>
+    </select>
+
+    <div class="form-group">
+      <label for="Vload">V<sub>load</sub></label>
+      <input type="number" class="form-control" ng-model="Vload" id="Vload" name="Vload"/>
+    </div>
+    
+    <div class="form-group">
+      <label for="Iloadmax">I<sub>load<sub>max</sub></sub></label>
+      <input type="number" class="form-control" ng-model="Iloadmax" id="Iloadmax" name="Iloadmax" ng-min="0" ng-max="{{transistor.Icmax}}"/>
+      <span class="help-block" ng-show="calc.Iloadmax.$dirty && calc.Iloadmax.$invalid">
+        <p ng-show="calc.Iloadmax.$error.number">Not a number</p>
+        <p ng-show="calc.Iloadmax.$error.ngMin">Cannot be negative</p>
+        <p ng-show="calc.Iloadmax.$error.ngMax">Too big</p>
+      </span>
+    </div>
+
+    {{calc.Iloadmax.$error}}
+  </form>
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.15/angular.min.js"></script>
+  <script src="transistor.js"></script>
+
+</body>
+</html>
